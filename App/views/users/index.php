@@ -14,13 +14,13 @@
             border-radius: 8px;
         }
         .pagination .page-item.active .page-link {
-            background-color: #000000;
-            border-color: #929292;
+            background-color:black;
+            border-color: #ffc10700;
             color: white;
         }
 
         .pagination .page-link {
-            color: #0d6efd;
+            color: #000;
         }
 </style>
     </style>
