@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\QueryBuilder;
-use App\Models\User;
+
 
 class UsersController extends Controller
 {
@@ -21,7 +21,7 @@ class UsersController extends Controller
     {
         if (!$image) return;
 
-        $path = __DIR__ . '/../../public/images/' . $image;
+        $path = __DIR__ . '/../../public/assets/images/users/' . $image;
 
         if (file_exists($path)) {
             unlink($path);
@@ -29,12 +29,25 @@ class UsersController extends Controller
     }
 
     public function index()
-    {
-        $this->view("users/index", [
-            "users" => QueryBuilder::table("users")->get()
-        ]);
-    }
+{
+    $allUsers = QueryBuilder::table("users")->get();
 
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $page = max($page, 1);
+
+    $perPage = 5;
+    $totalUsers = count($allUsers);
+    $totalPages = (int) ceil($totalUsers / $perPage);
+
+    $offset = ($page - 1) * $perPage;
+    $users = array_slice($allUsers, $offset, $perPage);
+
+    $this->view("users/index", [
+        "users" => $users,
+        "page" => $page,
+        "totalPages" => $totalPages
+    ]);
+}
     public function show($id)
     {
         $this->view("users/show", [
@@ -67,7 +80,7 @@ class UsersController extends Controller
         $image = $this->uploadImage();
         $role = trim($_POST["role"]);
 
-        User::create([
+        QueryBuilder::table("users")->insert([
             "name" => trim($_POST["name"]),
             "email" => trim($_POST["email"]),
             "password" => password_hash($_POST["password"], PASSWORD_DEFAULT),
@@ -254,7 +267,7 @@ class UsersController extends Controller
         }
 
         $imageName = time() . '_' . preg_replace('/\s+/', '_', basename($_FILES["image"]["name"]));
-        $path = __DIR__ . '/../../public/images/' . $imageName;
+        $path = __DIR__ . '/../../public/assets/images/users/' . $imageName;
 
         move_uploaded_file($_FILES["image"]["tmp_name"], $path);
 

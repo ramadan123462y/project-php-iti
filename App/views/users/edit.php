@@ -108,7 +108,7 @@
                             name="image"
                             class="form-control"
                             accept=".jpg,.jpeg,.png,.webp">
-                        <small class="text-muted">Allowed formats: JPG, JPEG, PNG, WEBP</small>
+                        <small class="text-muted">Allowed formats: JPG, JPEG, PNG, WEBP must be less than 2MB.</small>
                     </div>
                 </div>
 

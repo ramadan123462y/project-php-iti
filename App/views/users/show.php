@@ -19,7 +19,7 @@
                     <div class="col-md-4 text-center">
                         <?php if (!empty($user['image'])): ?>
                             <img
-                                src="<?= url("images/" . $user['image']) ?>"
+                                src="<?= url("/assets/images/users/" . $user['image']) ?>"
                                 alt="User Image"
                                 class="img-thumbnail"
                                 style="width: 180px; height: 180px; object-fit: cover;">

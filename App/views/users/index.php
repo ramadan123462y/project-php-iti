@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>All Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .user-img {
             width: 70px;
@@ -12,6 +13,16 @@
             object-fit: cover;
             border-radius: 8px;
         }
+        .pagination .page-item.active .page-link {
+            background-color: #000000;
+            border-color: #929292;
+            color: white;
+        }
+
+        .pagination .page-link {
+            color: #0d6efd;
+        }
+</style>
     </style>
 </head>
 <body class="bg-light">
@@ -48,7 +59,7 @@
                                 <td><?= $user["role"] ?></td>
                                 <td>
                                     <?php if (!empty($user["image"])): ?>
-                                        <img src="<?= url("images/" . $user["image"]) ?>" alt="user" class="user-img">
+                                        <img src="<?= url("/assets/images/users/" . $user["image"]) ?>" alt="user" class="user-img">
                                     <?php else: ?>
                                         No Image
                                     <?php endif; ?>
@@ -61,14 +72,67 @@
                                     <a href="<?= url("users/edit/{$user['id']}") ?>" class="btn btn-warning btn-sm">Edit</a>
                                 </td>
                                 <td>
-                                    <form action="<?= url("users/delete/{$user['id']}") ?>" method="POST" style="display:inline;">
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
+                                    <button
+                                        type="button"
+                                        class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal<?= $user['id'] ?>">
+                                        Delete
+                                    </button>
+
+                                    <div class="modal fade" id="deleteModal<?= $user['id'] ?>" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirm Delete</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete
+                                                    <strong><?= htmlspecialchars($user['name']) ?></strong>?
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                                                    <form action="<?= url("users/delete/{$user['id']}") ?>" method="POST" class="d-inline">
+                                                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php if (($totalPages ?? 1) > 1): ?>
+                <nav class="mt-4">
+                        <ul class="pagination justify-content-center">
+
+                            <?php if ($page > 1): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="<?= url('users') . '?page=' . ($page - 1) ?>">Previous</a>
+                                </li>
+                            <?php endif; ?>
+
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                    <a class="page-link" href="<?= url('users') . '?page=' . $i ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+
+                            <?php if ($page < $totalPages): ?>
+                                <li class="page-item ">
+                                    <a class="page-link" href="<?= url('users') . '?page=' . ($page + 1) ?>">Next</a>
+                                </li>
+                            <?php endif; ?>
+
+                        </ul>
+                </nav>
+                <?php endif; ?>
             </div>
         </div>
     </div>
