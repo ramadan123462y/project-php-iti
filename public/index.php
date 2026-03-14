@@ -12,8 +12,9 @@
 | function view($name) { require "../views/$name.php"; }
 |
 */
-
+session_start();
 require "../App/helpers.php";
+require "../App/errors.php";
 function test(){
 
 echo "test";

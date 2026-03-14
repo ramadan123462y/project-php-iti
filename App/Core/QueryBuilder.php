@@ -152,4 +152,9 @@ public function get(): array
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function lastInsertedId()
+    {
+        return $this->connection->lastInsertId();
+    }
 }
