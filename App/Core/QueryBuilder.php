@@ -13,6 +13,21 @@ class QueryBuilder
     private array $whereConditions = [];
     private array $bindings = [];
 
+    private ?int $limit = null;
+    private ?int $offset = null;
+
+    public function limit(int $limit): self
+{
+    $this->limit = $limit;
+    return $this;
+}
+
+    public function offset(int $offset): self
+    {
+        $this->offset = $offset;
+        return $this;
+    }
+
     private function __construct(string $table)
     {
         $this->connection = Database::connect();
@@ -38,25 +53,31 @@ class QueryBuilder
         return $this;
     }
 
-    public function get(): array
-    {
-        $columns = implode(",", $this->columns);
+public function get(): array
+{
+    $columns = implode(",", $this->columns);
 
-        $sql = "SELECT $columns FROM {$this->table}";
+    $sql = "SELECT $columns FROM {$this->table}";
 
-        if (!empty($this->whereConditions)) {
-
-            $where = implode(" AND ", $this->whereConditions);
-
-            $sql .= " WHERE $where";
-        }
-
-        $stmt = $this->connection->prepare($sql);
-
-        $stmt->execute($this->bindings);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (!empty($this->whereConditions)) {
+        $where = implode(" AND ", $this->whereConditions);
+        $sql .= " WHERE $where";
     }
+
+    // Add LIMIT and OFFSET if set
+    if ($this->limit !== null) {
+        $sql .= " LIMIT {$this->limit}";
+        if ($this->offset !== null) {
+            $sql .= " OFFSET {$this->offset}";
+        }
+    }
+
+    $stmt = $this->connection->prepare($sql);
+    $stmt->execute($this->bindings);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
     public function first(): array
     {

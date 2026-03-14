@@ -1,0 +1,168 @@
+/* Base subtle button */
+.btn-subtle {
+  border: 1px solid transparent;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Primary subtle */
+.btn-primary-subtle {
+  color: #084298;
+  background-color: #cfe2ff;
+  border-color: #b6d4fe;
+}
+.btn-primary-subtle:hover {
+  background-color: #b6d4fe;
+}
+
+/* Secondary subtle */
+.btn-secondary-subtle {
+  color: #41464b;
+  background-color: #e2e3e5;
+  border-color: #d3d6d8;
+}
+.btn-secondary-subtle:hover {
+  background-color: #d3d6d8;
+}
+
+/* Success subtle */
+.btn-success-subtle {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+.btn-success-subtle:hover {
+  background-color: #badbcc;
+}
+
+/* Danger subtle */
+.btn-danger-subtle {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+.btn-danger-subtle:hover {
+  background-color: #f5c2c7;
+}
+
+/* Warning subtle */
+.btn-warning-subtle {
+  color: #664d03;
+  background-color: #fff3cd;
+  border-color: #ffecb5;
+}
+.btn-warning-subtle:hover {
+  background-color: #ffecb5;
+}
+
+/* Info subtle */
+.btn-info-subtle {
+  color: #055160;
+  background-color: #cff4fc;
+  border-color: #b6effb;
+}
+.btn-info-subtle:hover {
+  background-color: #b6effb;
+}
+
+/* Light subtle */
+.btn-light-subtle {
+  color: #636464;
+  background-color: #fefefe;
+  border-color: #fdfdfe;
+}
+.btn-light-subtle:hover {
+  background-color: #fdfdfe;
+}
+
+/* Dark subtle */
+.btn-dark-subtle {
+  color: #141619;
+  background-color: #d3d3d4;
+  border-color: #bcbebf;
+}
+.btn-dark-subtle:hover {
+  background-color: #bcbebf;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Converted from @extend bootstrap utilities */
+.pageContainer {
+  max-width: 1320px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #fff;
+  border-radius: 0.375rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.hstack-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+.normal {
+  background-color: red;
+}
+
+.table-fixed-height {
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.table-fixed-height tbody tr {
+  height: 50px !important;
+  flex-grow: 1;
+}
+
+.table-fixed-height td,
+.table-fixed-height th {
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pagination .page-item .page-link {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  justify-content: center;
+}
+
+.tableImageDiv {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+}
+
+.tableImageDiv img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.error {
+  color: red;
+}
