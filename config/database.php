@@ -5,5 +5,5 @@ return [
     "port" => "3306",
     "dbname" => "iti_php_project",
     "user" => "root",
-    "password" => ""
+    "password" => "ahmed"
 ];

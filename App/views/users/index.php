@@ -44,9 +44,7 @@
                             <th>Role</th>
                             <th>Image</th>
                             <th>Ext</th>
-                            <th>View</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,11 +65,7 @@
                                 <td><?= $user["ext"] ?></td>
                                 <td>
                                     <a href="<?= url("users/show/{$user['id']}") ?>" class="btn btn-info btn-sm">View</a>
-                                </td>
-                                <td>
                                     <a href="<?= url("users/edit/{$user['id']}") ?>" class="btn btn-warning btn-sm">Edit</a>
-                                </td>
-                                <td>
                                     <button
                                         type="button"
                                         class="btn btn-danger btn-sm"
@@ -79,7 +73,6 @@
                                         data-bs-target="#deleteModal<?= $user['id'] ?>">
                                         Delete
                                     </button>
-
                                     <div class="modal fade" id="deleteModal<?= $user['id'] ?>" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
