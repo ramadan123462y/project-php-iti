@@ -12,7 +12,7 @@
 | function view($name) { require "../views/$name.php"; }
 |
 */
-
+session_start();
 require "../App/helpers.php";
 function test(){
 
