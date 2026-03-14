@@ -29,25 +29,25 @@ class UsersController extends Controller
     }
 
     public function index()
-{
-    $allUsers = QueryBuilder::table("users")->get();
+    {
+        $allUsers = QueryBuilder::table("users")->get();
 
-    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $page = max($page, 1);
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+        $page = max($page, 1);
 
-    $perPage = 5;
-    $totalUsers = count($allUsers);
-    $totalPages = (int) ceil($totalUsers / $perPage);
+        $perPage = 5;
+        $totalUsers = count($allUsers);
+        $totalPages = (int) ceil($totalUsers / $perPage);
 
-    $offset = ($page - 1) * $perPage;
-    $users = array_slice($allUsers, $offset, $perPage);
+        $offset = ($page - 1) * $perPage;
+        $users = array_slice($allUsers, $offset, $perPage);
 
-    $this->view("users/index", [
-        "users" => $users,
-        "page" => $page,
-        "totalPages" => $totalPages
-    ]);
-}
+        $this->view("users/index", [
+            "users" => $users,
+            "page" => $page,
+            "totalPages" => $totalPages
+        ]);
+    }
     public function show($id)
     {
         $this->view("users/show", [
