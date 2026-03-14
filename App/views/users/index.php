@@ -56,11 +56,7 @@
                                 <td><?= $user["room_id"] ?? "N/A" ?></td>
                                 <td><?= $user["role"] ?></td>
                                 <td>
-                                    <?php if (!empty($user["image"])): ?>
-                                        <img src="<?= url("/assets/images/users/" . $user["image"]) ?>" alt="user" class="user-img">
-                                    <?php else: ?>
-                                        No Image
-                                    <?php endif; ?>
+                                    <img src="<?= url('/assets/images/users/' . (!empty($user['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $user['image']) ? $user['image'] : 'default.jpg')) ?>" alt="user" class="user-img">
                                 </td>
                                 <td><?= $user["ext"] ?></td>
                                 <td>
