@@ -8,7 +8,9 @@ use App\Core\Request;
 class CheckController extends Controller
 {
 
-    function index()
+
+
+    public function index()
     {
 
         $request = Request::all();
@@ -27,6 +29,8 @@ class CheckController extends Controller
                 orders.created_at,
 
                 products.name as product_name,
+                products.image as product_image,
+
                 order_item.quantity,
                 order_item.price
 
@@ -85,7 +89,8 @@ class CheckController extends Controller
             $users[$userId]['orders'][$orderId]['products'][] = [
                 'name' => $row['product_name'],
                 'price' => $row['price'],
-                'quantity' => $row['quantity']
+                'quantity' => $row['quantity'],
+                'image' => $row['product_image']
             ];
         }
 

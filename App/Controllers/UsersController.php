@@ -2,13 +2,16 @@
 
 namespace App\Controllers;
 
+
 use App\Core\QueryBuilder;
 
 
 class UsersController extends Controller
 {
+
     private function getRooms()
     {
+        
         return QueryBuilder::table("rooms")->get();
     }
 

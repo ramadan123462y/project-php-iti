@@ -2,8 +2,6 @@
 
 namespace App\Core;
 
-
-
 class Auth
 {
     public static function login(array $user, $role = "user"): void

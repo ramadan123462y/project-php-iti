@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Auth;
 use App\Core\QueryBuilder;
 use App\Core\Validator;
 
@@ -31,6 +32,7 @@ class OrderController extends Controller
     private function orderPageData($userId, $currentPagePath)
     {
         $authUserId = $_SESSION["userId"] ?? 2;
+        $authUser = Auth::currentUser();
 
         $authUser = QueryBuilder::table("users")
             ->where("id", $authUserId)
