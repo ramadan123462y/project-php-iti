@@ -3,16 +3,32 @@
 namespace App\Controllers;
 
 use App\Core\QueryBuilder;
+use App\Core\Auth;
 
 class OrdersController extends Controller
 {
     public function index()
     {
+        $currentUser = Auth::currentUser();
+        
+        if (!$currentUser) {
+            redirect("login");
+            return;
+        }
+        
+        $userId = $currentUser['id'] ?? null;
+        $userRole = $currentUser['role'] ?? 'user';
+        
         $status = $_GET['status'] ?? null;
         $dateFrom = $_GET['date_from'] ?? null;
         $dateTo = $_GET['date_to'] ?? null;
 
-        $orders = QueryBuilder::table("orders")->get();
+     
+        if ($userRole === 'admin') {
+            return $this->adminIndex();
+        } else {
+            $orders = QueryBuilder::table("orders")->where("user_id", "=", $userId)->get();
+        }
 
         if ($status || $dateFrom || $dateTo) {
             $orders = array_filter($orders, function ($order) use ($status, $dateFrom, $dateTo) {
