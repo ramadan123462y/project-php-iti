@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Auth;
 use App\Core\QueryBuilder;
 
+
 class OrdersController extends Controller
 {
 
@@ -12,18 +13,57 @@ class OrdersController extends Controller
     {
 
         if (!Auth::isAuth('admin')) {
-          
+
             redirect('/home/guest');
-            
         }
     }
+
+    private function requireAuth($role = 'user')
+    {
+        $currentUser = Auth::currentUser();
+
+        if (!$currentUser) {
+            redirect("login");
+            return null;
+        }
+
+        if ($role === 'admin' && $currentUser['role'] !== 'admin') {
+            $_SESSION['error'] = "Admin access required!";
+            redirect("orders");
+            return null;
+        }
+
+        return $currentUser;
+    }
+
+    private function checkOrderOwnership($order, $currentUser)
+    {
+        if ($order['user_id'] !== $currentUser['id'] && $currentUser['role'] !== 'admin') {
+            $_SESSION['error'] = "Access denied! You can only access your own orders.";
+            redirect("orders");
+            return false;
+        }
+        return true;
+    }
+
     public function index()
     {
+        $currentUser = $this->requireAuth();
+        if (!$currentUser) return;
+
+        $userId = $currentUser['id'] ?? null;
+        $userRole = $currentUser['role'] ?? 'user';
+
         $status = $_GET['status'] ?? null;
         $dateFrom = $_GET['date_from'] ?? null;
         $dateTo = $_GET['date_to'] ?? null;
 
-        $orders = QueryBuilder::table("orders")->get();
+
+        if ($userRole === 'admin') {
+            return $this->adminIndex();
+        } else {
+            $orders = QueryBuilder::table("orders")->where("user_id", "=", $userId)->get();
+        }
 
         if ($status || $dateFrom || $dateTo) {
             $orders = array_filter($orders, function ($order) use ($status, $dateFrom, $dateTo) {
@@ -56,6 +96,8 @@ class OrdersController extends Controller
 
     public function adminIndex()
     {
+        $currentUser = $this->requireAuth('admin');
+        if (!$currentUser) return;
         $status = $_GET['status'] ?? null;
         $dateFrom = $_GET['date_from'] ?? null;
         $dateTo = $_GET['date_to'] ?? null;
@@ -94,11 +136,16 @@ class OrdersController extends Controller
 
     public function show($id)
     {
+        $currentUser = $this->requireAuth();
+        if (!$currentUser) return;
+
         $order = QueryBuilder::table("orders")
             ->where("id", $id)
             ->first();
 
         if (!empty($order)) {
+            if (!$this->checkOrderOwnership($order, $currentUser)) return;
+
             $order['items'] = QueryBuilder::table("order_item")
                 ->where("order_id", $id)
                 ->get();
@@ -121,6 +168,9 @@ class OrdersController extends Controller
 
     public function adminShow($id)
     {
+        $currentUser = $this->requireAuth('admin');
+        if (!$currentUser) return;
+
         $order = QueryBuilder::table("orders")
             ->where("id", $id)
             ->first();
@@ -153,6 +203,9 @@ class OrdersController extends Controller
 
     public function updateStatus($id)
     {
+        $currentUser = $this->requireAuth('admin');
+        if (!$currentUser) return;
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $status = $_POST['status'] ?? 'pending';
             QueryBuilder::table("orders")->where("id", $id)->update(["status" => $status]);
@@ -163,6 +216,12 @@ class OrdersController extends Controller
 
     public function cancel($id)
     {
+        $currentUser = $this->requireAuth();
+        if (!$currentUser) return;
+
+        $order = QueryBuilder::table("orders")->where("id", $id)->first();
+        if (!$order || !$this->checkOrderOwnership($order, $currentUser)) return;
+
         QueryBuilder::table("orders")->where("id", $id)->update(["status" => "cancelled"]);
         $_SESSION['success'] = "Order #$id has been cancelled.";
         redirect("orders");
@@ -170,6 +229,8 @@ class OrdersController extends Controller
 
     public function create()
     {
+        $currentUser = $this->requireAuth();
+        if (!$currentUser) return;
         $products = QueryBuilder::table("products")
             ->where("is_available", 1)
             ->get();
@@ -205,6 +266,9 @@ class OrdersController extends Controller
 
     public function store()
     {
+        $currentUser = $this->requireAuth();
+        if (!$currentUser) return;
+
         $productIds = $_POST["product_id"] ?? [];
         $quantities = $_POST["quantity"] ?? [];
         $notes = $_POST["notes"] ?? "";
@@ -235,7 +299,7 @@ class OrdersController extends Controller
         if (!empty($orderItems)) {
             $db = \App\Core\Database::connect();
             $success = QueryBuilder::table("orders")->insert([
-                "user_id" => 2,
+                "user_id" => $currentUser['id'],
                 "room_id" => $roomId,
                 "notes" => $notes,
                 "total_price" => $totalPrice,
@@ -261,11 +325,16 @@ class OrdersController extends Controller
 
     public function edit($id)
     {
+        $currentUser = $this->requireAuth();
+        if (!$currentUser) return;
+
         $order = QueryBuilder::table("orders")
             ->where("id", $id)
             ->first();
 
         if (!empty($order)) {
+            if (!$this->checkOrderOwnership($order, $currentUser)) return;
+
             $order['items'] = QueryBuilder::table("order_item")
                 ->where("order_id", $id)
                 ->get();
@@ -287,23 +356,36 @@ class OrdersController extends Controller
 
     public function update($id)
     {
+        $currentUser = $this->requireAuth();
+        if (!$currentUser) return;
+
+        $order = QueryBuilder::table("orders")->where("id", $id)->first();
+        if (!$order || !$this->checkOrderOwnership($order, $currentUser)) return;
+
         QueryBuilder::table("orders")
             ->where("id", $id)
             ->update([
-            "status" => $_POST["status"],
-            "room_id" => $_POST["room_id"],
-            "notes" => $_POST["notes"]
-        ]);
+                "status" => $_POST["status"],
+                "room_id" => $_POST["room_id"],
+                "notes" => $_POST["notes"]
+            ]);
 
         redirect("/orders");
     }
 
     public function delete($id)
     {
+        $currentUser = $this->requireAuth();
+        if (!$currentUser) return;
+
+        $order = QueryBuilder::table("orders")->where("id", $id)->first();
+        if (!$order || !$this->checkOrderOwnership($order, $currentUser)) return;
+
         QueryBuilder::table("orders")
             ->where("id", $id)
             ->delete();
 
+        $_SESSION['success'] = "Order #$id has been deleted.";
         redirect("/orders");
     }
 }

@@ -6,7 +6,6 @@ namespace App\Controllers;
 use App\Core\Auth;
 use App\Core\QueryBuilder;
 
-
 class UsersController extends Controller
 {
 

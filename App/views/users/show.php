@@ -9,6 +9,7 @@
 </head>
 
 <body class="bg-light">
+    <?php require __DIR__ . '/../components/AdminNavbar.php';?>
 
     <div class="container py-4">
         <div class="card shadow-sm border-0">
@@ -17,17 +18,11 @@
 
                 <div class="row g-4 align-items-start">
                     <div class="col-md-4 text-center">
-                        <?php if (!empty($user['image'])): ?>
                             <img
-                                src="<?= url("/assets/images/users/" . $user['image']) ?>"
+                                src="<?= url('/assets/images/users/' . (!empty($user['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $user['image']) ? $user['image'] : 'default.jpg')) ?>"
                                 alt="User Image"
                                 class="img-thumbnail"
-                                style="width: 180px; height: 180px; object-fit: cover;">
-                        <?php else: ?>
-                            <div class="border rounded p-5 bg-light text-muted">
-                                No Image
-                            </div>
-                        <?php endif; ?>
+                                style="width: 180px; height: 180px; object-fit: cover;"/>
                     </div>
 
                     <div class="col-md-8">

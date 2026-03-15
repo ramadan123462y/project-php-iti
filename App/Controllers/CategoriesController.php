@@ -73,7 +73,9 @@ LIMIT 1"
 
     public function store()
     {
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $errors = [];
 
         $name = trim($_POST['name']);
@@ -128,7 +130,9 @@ LIMIT 1"
 
     public function update($id)
     {
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $errors = [];
 
         $name = trim($_POST['name']);

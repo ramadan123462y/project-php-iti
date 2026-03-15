@@ -32,20 +32,13 @@
             border-radius: 6px;
         }
     </style>
-
-
-    <link rel="stylesheet" href="assets/css/navbar.css">
-
-
 </head>
 
-<body class="bg-white p-4">
+<body>
 
-    <?php
-    require __DIR__ . "/../components/navbar-admin.php";
-    ?>
+    <?php require __DIR__ . '../../components/AdminNavbar.php'; ?>
 
-    <div class="container border p-4">
+    <div class="container border p-4 mt-5 pt-4">
 
         <h2 class="fw-bold mb-4">Checks</h2>
 
