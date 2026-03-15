@@ -12,9 +12,7 @@ class OrderController extends Controller
 
     public function __construct()
     {
-
-        if (!Auth::isAuth('admin')) {
-
+        if (!Auth::isAuth('admin') && !Auth::isAuth('user')) {
             redirect('/home/guest');
         }
     }
