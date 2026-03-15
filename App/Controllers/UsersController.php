@@ -2,20 +2,25 @@
 
 namespace App\Controllers;
 
+
 use App\Core\Auth;
 use App\Core\QueryBuilder;
 
 class UsersController extends Controller
 {
+
     public function __construct()
     {
+
         if (!Auth::isAuth('admin')) {
+
             redirect('/home/guest');
         }
     }
 
     private function getRooms()
     {
+
         return QueryBuilder::table("rooms")->get();
     }
 
@@ -55,7 +60,6 @@ class UsersController extends Controller
             "totalPages" => $totalPages
         ]);
     }
-
     public function show($id)
     {
         $this->view("users/show", [
@@ -91,7 +95,7 @@ class UsersController extends Controller
         QueryBuilder::table("users")->insert([
             "name" => trim($_POST["name"]),
             "email" => trim($_POST["email"]),
-            "password" => $_POST["password"],
+            "password" => password_hash($_POST["password"], PASSWORD_DEFAULT),
             "room_id" => $role === "admin" ? null : trim($_POST["room_id"]),
             "ext" => trim($_POST["ext"]),
             "role" => $role,
@@ -146,7 +150,7 @@ class UsersController extends Controller
         ];
 
         if (!empty($_POST["password"])) {
-            $data["password"] = $_POST["password"];
+            $data["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
         }
 
         $image = $this->uploadImage();
