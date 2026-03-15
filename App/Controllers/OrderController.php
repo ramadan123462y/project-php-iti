@@ -9,18 +9,10 @@ use App\Core\Validator;
 
 class OrderController extends Controller
 {
-
-    public function __construct()
-    {
-
-        if (!Auth::isAuth('admin')) {
-
-            redirect('/home/guest');
-        }
-    }
-
     public function index()
     {
+        
+        Auth::validateIsUser();
 
         $authUser = Auth::currentUser('user');
 
@@ -35,7 +27,7 @@ class OrderController extends Controller
     public function admin()
     {
 
-
+       Auth::validateIsAdmin();
         $user = Auth::currentUser('admin');
 
         if ($user["role"] != "admin") {

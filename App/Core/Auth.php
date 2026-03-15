@@ -44,4 +44,20 @@ class Auth
 
         return isset($_SESSION[$role]);
     }
+
+    public static function validateIsAdmin()
+    {
+        if (!Auth::isAuth('admin')) {
+
+            redirect('/home/guest');
+        }
+    }
+
+    public static function validateIsUser()
+    {
+        if (!Auth::isAuth('user')) {
+
+            redirect('/home/guest');
+        }
+    }
 }

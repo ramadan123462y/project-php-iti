@@ -9,14 +9,7 @@ use App\Core\QueryBuilder;
 class OrdersController extends Controller
 {
 
-    public function __construct()
-    {
 
-        if (!Auth::isAuth('admin')) {
-
-            redirect('/home/guest');
-        }
-    }
 
     private function requireAuth($role = 'user')
     {
