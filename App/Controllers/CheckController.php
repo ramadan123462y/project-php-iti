@@ -11,22 +11,20 @@ class CheckController extends Controller
 
     public function __construct()
     {
-
         if (!Auth::isAuth('admin')) {
-          
             redirect('/home/guest');
-            
         }
     }
 
     public function index()
     {
-
         $request = Request::all();
 
-        $from = $request->from ?? null;
-        $to = $request->to ?? null;
-        $user = $request->user ?? null;
+        $from    = isset($request->from)  && $request->from  !== '' ? (string)$request->from  : null;
+        $to      = isset($request->to)    && $request->to    !== '' ? (string)$request->to    : null;
+        $user    = isset($request->user)  && $request->user  !== '' ? (int)$request->user     : null;
+        $page    = max(1, (int)($request->page ?? 1));
+        $perPage = 3;
 
         $sql = "
             SELECT
@@ -67,47 +65,72 @@ class CheckController extends Controller
             $bindings[] = $user;
         }
 
-        $sql .= " ORDER BY users.id , orders.id";
+        $sql .= " ORDER BY users.id, orders.id";
 
-        $qb = QueryBuilder::table("orders");
-
+        $qb     = QueryBuilder::table("orders");
         $checks = $qb->raw($sql, $bindings);
 
-        $users = [];
+        $allUsers = $this->groupByUsers($checks);
 
-        foreach ($checks as $row) {
+        $totalUsers = count($allUsers);
+        $totalPages = max(1, (int)ceil($totalUsers / $perPage));
+        $page       = min($page, $totalPages);
+        $offset     = ($page - 1) * $perPage;
 
-            $userId = $row['user_id'];
-            $orderId = $row['order_id'];
-
-            if (!isset($users[$userId])) {
-                $users[$userId] = [
-                    'name' => $row['user_name'],
-                    'orders' => []
-                ];
-            }
-
-            if (!isset($users[$userId]['orders'][$orderId])) {
-                $users[$userId]['orders'][$orderId] = [
-                    'date' => $row['created_at'],
-                    'total' => $row['total_price'],
-                    'products' => []
-                ];
-            }
-
-            $users[$userId]['orders'][$orderId]['products'][] = [
-                'name' => $row['product_name'],
-                'price' => $row['price'],
-                'quantity' => $row['quantity'],
-                'image' => $row['product_image']
-            ];
-        }
+        $users = array_slice($allUsers, $offset, $perPage, true);
 
         $usersList = QueryBuilder::table("users")
             ->select(["id", "name"])
             ->where("role", "user")
             ->get();
 
-        $this->view("admin/checks", compact("users", "usersList", "from", "to", "user"));
+        $filterParams = array_filter([
+            'from' => $from,
+            'to'   => $to,
+            'user' => $user,
+        ], fn($v) => $v !== null && $v !== '');
+
+        $buildPageUrl = fn(int $p) => '?' . http_build_query(array_merge($filterParams, ['page' => $p]));
+
+        $this->view("admin/checks", compact(
+            "users", "usersList",
+            "from", "to", "user",
+            "page", "totalPages", "totalUsers",
+            "buildPageUrl"
+        ));
+    }
+
+    private function groupByUsers(array $checks): array
+    {
+        $users = [];
+
+        foreach ($checks as $row) {
+            $userId  = $row['user_id'];
+            $orderId = $row['order_id'];
+
+            if (!isset($users[$userId])) {
+                $users[$userId] = [
+                    'name'   => $row['user_name'],
+                    'orders' => []
+                ];
+            }
+
+            if (!isset($users[$userId]['orders'][$orderId])) {
+                $users[$userId]['orders'][$orderId] = [
+                    'date'     => $row['created_at'],
+                    'total'    => $row['total_price'],
+                    'products' => []
+                ];
+            }
+
+            $users[$userId]['orders'][$orderId]['products'][] = [
+                'name'     => $row['product_name'],
+                'price'    => $row['price'],
+                'quantity' => $row['quantity'],
+                'image'    => $row['product_image']
+            ];
+        }
+
+        return $users;
     }
 }
