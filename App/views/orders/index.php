@@ -17,7 +17,7 @@
 
 <body>
 
-    <?php require __DIR__ . '/../Order/Components/navbar.php'; ?>
+    
 
     <div class="container-fluid py-4">
         <div class="row">

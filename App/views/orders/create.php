@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/../Order/Components/head.php'; ?>
 <body class="bg-light">
-    <?php require __DIR__ . '/../Order/Components/navbar.php'; ?>
+   <?php require __DIR__ . '/../components//UserNavbar.php';?>
     <div class="container py-4">
 
         <!-- Header -->
