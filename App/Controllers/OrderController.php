@@ -4,13 +4,18 @@ namespace App\Controllers;
 
 use App\Core\QueryBuilder;
 use App\Core\Validator;
+use App\Core\Auth;
 
 class OrderController extends Controller
 {
 
     public function index()
     {
-        $userId = $_SESSION["userId"] ?? 2;
+
+        $authUser = Auth::currentUser('user');
+
+
+        $userId = $authUser["id"];
 
         $data = $this->orderPageData($userId, "/Order/index");
 
@@ -19,22 +24,28 @@ class OrderController extends Controller
 
     public function admin()
     {
+
+
+        $user = Auth::currentUser('admin');
+
+        if ($user["role"] != "admin") {
+            redirect("/Order/index");
+        }
+
+
+
         $userId = $_GET["user"] ?? null;
 
         $data = $this->orderPageData($userId, "/Order/admin");
 
-        $data["users"] = QueryBuilder::table("users")->get();
+        $data["users"] = QueryBuilder::table("users")->where("role", "user")->get();
 
         $this->view("Order/Admin/index", $data);
     }
 
     private function orderPageData($userId, $currentPagePath)
     {
-        $authUserId = $_SESSION["userId"] ?? 2;
-
-        $authUser = QueryBuilder::table("users")
-            ->where("id", $authUserId)
-            ->first();
+        $authUser = Auth::currentUser();
 
         $products = $this->getProducts();
         $rooms = $this->getRooms();
@@ -157,83 +168,89 @@ class OrderController extends Controller
     }
 
     public function store()
-    {
+{
+    $validator = new Validator($_POST);
 
-        $validator = new Validator($_POST);
-        $validator->validate([
-            'room' => ['required', 'numeric'],
-        ]);
-        $cart = $_SESSION["cart"] ?? [];
-        if (empty($cart)) {
-            $validator->addError('cart', 'Cart is empty.');
-        }
-        $authUserId = $_SESSION["userId"] ?? 1;
+    $validator->validate([
+        'room' => ['required', 'numeric'],
+    ]);
+
+    $cart = $_SESSION["cart"] ?? [];
+
+    if (empty($cart)) {
+        $validator->addError('cart', 'Cart is empty.');
+    }
+
+        $authUser = Auth::currentUser('admin') ?: Auth::currentUser('user');
 
 
-        $authUser = QueryBuilder::table("users")
-            ->where("id", $authUserId)
-            ->first();
-        if ($authUser["role"] === "admin" && empty($_POST["user_id"])) {
+    if (!$authUser) {
+        $validator->addError('user', 'User not found.');
+    }
+
+
+    if ($authUser && $authUser["role"] === "admin") {
+
+        if (empty($_POST["user_id"])) {
             $validator->addError('user', 'Please select a user.');
         }
-        if (!$authUser) {
-            $validator->addError('user', 'User not found.');
-        }
 
+        $userId = $_POST["user_id"] ?? null;
 
+    } else {
 
-        if ($validator->fails()) {
-            $_SESSION['errors'] = $validator->errors();
-            redirect($this->redirectTarget());
-        }
-        $data = $validator->validated();
+        $userId = $authUser["id"] ?? null;
 
-        $userId = $_POST["user_id"] ?? $authUserId;
+    }
 
-        $totalPrice = $this->calculateCartTotal($cart);
-
-
-
-        QueryBuilder::table("orders")->insert([
-            "user_id" => $userId,
-            "room_id" => $data["room"],
-            "notes" => $data["notes"] ?? null,
-            "total_price" => $totalPrice
-        ]);
-
-        $orderId = QueryBuilder::table("orders")->lastInsertedId();
-
-        if ($orderId) {
-
-            $values = [];
-            $placeholders = [];
-
-            foreach ($cart as $item) {
-
-                $placeholders[] = "(?,?,?,?)";
-
-                array_push(
-                    $values,
-                    $orderId,
-                    $item["id"],
-                    $item["quantity"],
-                    $item["price"]
-                );
-            }
-
-            $sql = "INSERT INTO order_item(order_id,product_id,quantity,price) VALUES "
-                . implode(",", $placeholders);
-
-            QueryBuilder::table("order_item")->raw($sql, $values);
-        }
-
-        unset($_SESSION["cart"]);
-        if ($validator->passes()) {
-            $_SESSION['success'] = "Order submitted successfully.";
-        }
-
+    if ($validator->fails()) {
+        $_SESSION['errors'] = $validator->errors();
         redirect($this->redirectTarget());
     }
+
+    $data = $validator->validated();
+
+    $totalPrice = $this->calculateCartTotal($cart);
+
+    QueryBuilder::table("orders")->insert([
+        "user_id" => $userId,
+        "room_id" => $data["room"],
+        "notes" => $_POST["notes"] ?? null,
+        "total_price" => $totalPrice
+    ]);
+
+    $orderId = QueryBuilder::table("orders")->lastInsertedId();
+
+    if ($orderId) {
+
+        $values = [];
+        $placeholders = [];
+
+        foreach ($cart as $item) {
+
+            $placeholders[] = "(?,?,?,?)";
+
+            array_push(
+                $values,
+                $orderId,
+                $item["id"],
+                $item["quantity"],
+                $item["price"]
+            );
+        }
+
+        $sql = "INSERT INTO order_item(order_id,product_id,quantity,price) VALUES "
+            . implode(",", $placeholders);
+
+        QueryBuilder::table("order_item")->raw($sql, $values);
+    }
+
+    unset($_SESSION["cart"]);
+
+    $_SESSION['success'] = "Order submitted successfully.";
+
+    redirect($this->redirectTarget());
+}
 
     public function remove()
     {

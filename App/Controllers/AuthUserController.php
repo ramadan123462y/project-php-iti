@@ -44,6 +44,22 @@ class AuthUserController extends Controller
 
         Auth::login($user, $request->role);
 
+        if ($request->role === "admin") {
+            redirect("/order/admin");
+        }
+
+        if ($request->role === "user") {
+            redirect("/order/index");
+        }
+
+
         echo "Login successful!";
+    }
+    public function logout()
+    {
+        Auth::logout();
+        session_unset();
+        session_destroy();
+        redirect("/authuser/index");
     }
 }

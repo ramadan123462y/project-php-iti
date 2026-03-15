@@ -3,7 +3,7 @@
 return [
     "host" => "localhost",
     "port" => "3306",
-    "dbname" => "iti_php_project",
+    "dbname" => "iticafeteria",
     "user" => "root",
     "password" => ""
 ];

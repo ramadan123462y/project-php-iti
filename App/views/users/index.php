@@ -26,6 +26,7 @@
     </style>
 </head>
 <body class="bg-light">
+    <?php require __DIR__ . '/../components/AdminNavbar.php';?>
     <div class="container">
         <div class="page-box bg-white rounded p-4 mt-4 shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-4">

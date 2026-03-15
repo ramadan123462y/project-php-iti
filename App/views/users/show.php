@@ -9,6 +9,7 @@
 </head>
 
 <body class="bg-light">
+    <?php require __DIR__ . '/../components/AdminNavbar.php';?>
 
     <div class="container py-4">
         <div class="card shadow-sm border-0">

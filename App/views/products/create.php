@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/../components/AdminNavbar.php';
 @require __DIR__ . "/../components/bootstrap.php";
 
 session_start();

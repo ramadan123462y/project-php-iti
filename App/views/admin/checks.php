@@ -26,6 +26,7 @@
         }
     </style>
 </head>
+<?php require __DIR__ . '../../components/AdminNavbar.php'; ?>
 
 <body class="bg-white p-4">
 
