@@ -4,12 +4,13 @@ use App\Core\Auth;
 
 $authUser = Auth::currentUser("admin") ?? [];
 
-
-$currentUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
-$currentUri = rtrim($currentUri, '/') ?: '/';
+$requestUri  = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+$scriptDir   = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
+$currentUri  = '/' . ltrim(substr($requestUri, strlen($scriptDir)), '/');
+$currentUri  = rtrim($currentUri, '/') ?: '/';
 
 $displayName = $authUser['name'] ?? 'Admin';
-$avatarUrl = 'https://ui-avatars.com/api/?name=' . urlencode($displayName) . '&background=0d6efd&color=fff';
+$avatarUrl   = 'https://ui-avatars.com/api/?name=' . urlencode($displayName) . '&background=0d6efd&color=fff';
 
 function active($uri, $paths)
 {
@@ -31,41 +32,41 @@ function active($uri, $paths)
             <ul class="navbar-nav me-auto gap-lg-3">
 
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold <?= active($currentUri, ['/','/Home','/Home/index']) ?>"
-                       href="<?= url('/Orders/adminIndex') ?>">Home</a>
+                    <a class="nav-link fw-semibold <?= active($currentUri, ['/', '/Home', '/Home/index', '/Orders/adminIndex']) ?>"
+                        href="<?= url('/Orders/adminIndex') ?>">Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold <?= active($currentUri, ['/Products','/Products/index']) ?>"
-                       href="<?= url('/Products/index') ?>">Products</a>
+                    <a class="nav-link fw-semibold <?= active($currentUri, ['/Products', '/Products/index']) ?>"
+                        href="<?= url('/Products/index') ?>">Products</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold <?= active($currentUri, ['/Users','/Users/index']) ?>"
-                       href="<?= url('/Users/index') ?>">Users</a>
+                    <a class="nav-link fw-semibold <?= active($currentUri, ['/Users', '/Users/index']) ?>"
+                        href="<?= url('/Users/index') ?>">Users</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link fw-semibold <?= active($currentUri, ['/Order/admin']) ?>"
-                       href="<?= url('/Order/admin') ?>">Manual Order</a>
+                        href="<?= url('/Order/admin') ?>">Manual Order</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold <?= active($currentUri, ['/Check','/Check/index']) ?>"
-                       href="<?= url('/Check/index') ?>">Checks</a>
+                    <a class="nav-link fw-semibold <?= active($currentUri, ['/Check', '/Check/index']) ?>"
+                        href="<?= url('/Check/index') ?>">Checks</a>
                 </li>
 
             </ul>
 
             <div class="dropdown">
                 <a class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark"
-                   href="#"
-                   data-bs-toggle="dropdown">
+                    href="#"
+                    data-bs-toggle="dropdown">
 
                     <img src="<?= url('/assets/images/users/' . (!empty($authUser['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $authUser['image']) ? $authUser['image'] : 'default.jpg')) ?>"
-                         width="35"
-                         height="35"
-                         class="rounded-circle me-2">
+                        width="35"
+                        height="35"
+                        class="rounded-circle me-2">
 
                     <strong><?= e($displayName) ?></strong>
                 </a>
@@ -75,12 +76,13 @@ function active($uri, $paths)
                     <?php if (!empty($authUser['id'])): ?>
                         <li>
                             <a class="dropdown-item"
-                               href="<?= url('/Users/edit/' . $authUser['id']) ?>">
-                               Profile
+                                href="<?= url('/Users/edit/' . $authUser['id']) ?>">
+                                Profile
                             </a>
                         </li>
-
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                     <?php endif; ?>
 
                     <li>
