@@ -42,7 +42,7 @@
 <body class="bg-white p-4">
 
     <?php
-    require __DIR__ . "/../components/navbar.php";
+    require __DIR__ . "/../components/navbar-admin.php";
     ?>
 
     <div class="container border p-4">
@@ -79,7 +79,7 @@
                     <i class="bi bi-search me-2"></i>Filter
                 </button>
 
-                <a href="/checks" class="btn btn-secondary w-100">
+                <a href="<?php url("check") ?>" class="btn btn-secondary w-100">
                     <i class="bi bi-x-circle me-2"></i>Clear
                 </a>
             </div>

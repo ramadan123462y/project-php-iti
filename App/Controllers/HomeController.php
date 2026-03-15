@@ -8,4 +8,9 @@ class HomeController extends Controller
     {
         $this->view('welcome');
     }
+
+    public function guest()
+    {
+        $this->view("guest");
+    }
 }

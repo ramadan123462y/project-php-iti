@@ -9,6 +9,15 @@ use App\Core\Validator;
 class OrderController extends Controller
 {
 
+    public function __construct()
+    {
+
+        if (!Auth::isAuth('admin')) {
+
+            redirect('/home/guest');
+        }
+    }
+
     public function index()
     {
         $userId = $_SESSION["userId"] ?? 2;

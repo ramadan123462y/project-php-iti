@@ -3,15 +3,25 @@
 namespace App\Controllers;
 
 
+use App\Core\Auth;
 use App\Core\QueryBuilder;
 
 
 class UsersController extends Controller
 {
 
+    public function __construct()
+    {
+
+        if (!Auth::isAuth('admin')) {
+
+            redirect('/home/guest');
+        }
+    }
+
     private function getRooms()
     {
-        
+
         return QueryBuilder::table("rooms")->get();
     }
 

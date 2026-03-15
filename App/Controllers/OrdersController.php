@@ -2,10 +2,21 @@
 
 namespace App\Controllers;
 
+use App\Core\Auth;
 use App\Core\QueryBuilder;
 
 class OrdersController extends Controller
 {
+
+    public function __construct()
+    {
+
+        if (!Auth::isAuth('admin')) {
+          
+            redirect('/home/guest');
+            
+        }
+    }
     public function index()
     {
         $status = $_GET['status'] ?? null;
