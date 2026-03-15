@@ -1,7 +1,11 @@
 <?php require __DIR__ . '/../Order/Components/head.php'; ?>
 <body class="bg-light">
 
-    <?php require __DIR__ . '/../Order/Components/navbar.php'; ?>
+<?php 
+use App\Core\Auth;
+$navbar = Auth::isAuth('admin') ? 'AdminNavbar.php' : 'UserNavbar.php';
+require __DIR__ . '/../components/' . $navbar;
+?>
 
     <div class="container py-4">
 

@@ -11,19 +11,17 @@ class OrdersController extends Controller
 
     public function __construct()
     {
-
-        if (!Auth::isAuth('admin')) {
-
+        if (!Auth::isAuth('admin') && !Auth::isAuth('user')) {
             redirect('/home/guest');
         }
     }
 
     private function requireAuth($role = 'user')
     {
-        $currentUser = Auth::currentUser();
+        $currentUser = Auth::currentUser('user') ?? Auth::currentUser('admin');
 
         if (!$currentUser) {
-            redirect("login");
+            redirect("authuser/index");
             return null;
         }
 
@@ -62,7 +60,7 @@ class OrdersController extends Controller
         if ($userRole === 'admin') {
             return $this->adminIndex();
         } else {
-            $orders = QueryBuilder::table("orders")->where("user_id", "=", $userId)->get();
+            $orders = QueryBuilder::table("orders")->where("user_id", $userId)->get();
         }
 
         if ($status || $dateFrom || $dateTo) {
@@ -249,8 +247,7 @@ class OrdersController extends Controller
 
         $rooms = QueryBuilder::table("rooms")->get();
 
-        // Mock user for now using the first user from DB or ID 2
-        $userData = QueryBuilder::table("users")->where("id", 2)->first();
+        $userData = QueryBuilder::table("users")->where("id", $currentUser['id'])->first();
         if (!empty($userData)) {
             $room = QueryBuilder::table("rooms")->where("id", $userData['room_id'])->first();
             $userData['room_name'] = $room['name'] ?? 'N/A';
@@ -272,7 +269,7 @@ class OrdersController extends Controller
         $productIds = $_POST["product_id"] ?? [];
         $quantities = $_POST["quantity"] ?? [];
         $notes = $_POST["notes"] ?? "";
-        $roomId = $_POST["room_id"] ?? null;
+        $roomId = !empty($_POST["room_id"]) ? $_POST["room_id"] : null;
 
         $totalPrice = 0;
         $orderItems = [];
@@ -317,7 +314,12 @@ class OrdersController extends Controller
                         "price" => $item["price"]
                     ]);
                 }
+                $_SESSION['success'] = "Order #$orderId has been placed successfully!";
+            } else {
+                $_SESSION['error'] = "Something went wrong while placing the order.";
             }
+        } else {
+            $_SESSION['error'] = "No products were selected.";
         }
 
         redirect("/orders");

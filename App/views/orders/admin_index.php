@@ -10,13 +10,6 @@
 </head>
 <body class="bg-light">
     <?php require __DIR__ . '/../components/AdminNavbar.php';?>
-
-
-
-<body>
-
-
-
     <div class="container py-4">
 
         <div class="d-flex justify-content-between align-items-center mb-4">
