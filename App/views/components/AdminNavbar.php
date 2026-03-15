@@ -2,7 +2,7 @@
 
 use App\Core\Auth;
 
-$authUser = Auth::currentUser() ?? [];
+$authUser = Auth::currentUser("admin") ?? [];
 
 
 $currentUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
@@ -62,7 +62,7 @@ function active($uri, $paths)
                    href="#"
                    data-bs-toggle="dropdown">
 
-                    <img src="<?= e($avatarUrl) ?>"
+                    <img src="<?= url('/assets/images/users/' . (!empty($authUser['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $authUser['image']) ? $authUser['image'] : 'default.jpg')) ?>"
                          width="35"
                          height="35"
                          class="rounded-circle me-2">

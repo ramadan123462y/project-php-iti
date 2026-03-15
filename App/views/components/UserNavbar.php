@@ -47,7 +47,7 @@ function active($uri, $paths)
                    href="#"
                    data-bs-toggle="dropdown">
 
-                    <img src="<?= e($avatarUrl) ?>"
+                    <img src="<?= url('/assets/images/users/' . (!empty($authUser['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $authUser['image']) ? $authUser['image'] : 'default.jpg')) ?>"
                          width="35"
                          height="35"
                          class="rounded-circle me-2">
