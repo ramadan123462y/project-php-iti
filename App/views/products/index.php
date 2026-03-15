@@ -32,7 +32,7 @@ require __DIR__ . '/../components/AdminNavbar.php';
             <td> <?= $product["name"] ?></td>
             <td> <?= $product["price"] ?></td>
             <td>
-              <div class="tableImageDiv"> <img src="../public/assets/images/products/<?= $product["image"] ?>" /> </div>
+              <div class="tableImageDiv"> <img src="<?= url('assets/images/products/'.$product["image"]) ?>" /> </div>
             </td>
             <td> <?= $product["category_name"] ?></td>
             <td>
@@ -59,7 +59,7 @@ require __DIR__ . '/../components/AdminNavbar.php';
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                       <form action="<?= url("products/toggle/{$product['id']}") ?>" method="POST">
                         <button type="submit" class="btn <?= $product["is_available"] == 1 ? 'btn-warning' : 'btn-success' ?>""><?= $product["is_available"] == 1 ? 'Disable' : 'Enable' ?></button>
-            <input type=" hidden" name="page" value="<?= $currentPage ?>">
+            <input type="hidden" name="page" value="<?= $currentPage ?>">
                       </form>
 
                     </div>

@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/../components/AdminNavbar.php';
 @require __DIR__ . "/../components/bootstrap.php";
 
 if (session_status() !== PHP_SESSION_ACTIVE) {
