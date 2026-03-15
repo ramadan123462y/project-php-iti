@@ -5,5 +5,5 @@ return [
     "port" => "3306",
     "dbname" => "iticafeteria",
     "user" => "root",
-    "password" => ""
+    "password" => "ahmed"
 ];

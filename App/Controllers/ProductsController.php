@@ -76,7 +76,9 @@ class ProductsController extends Controller
 
     public function store()
     {
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $errors = [];
 
         $name = trim($_POST['name']);
@@ -188,7 +190,9 @@ class ProductsController extends Controller
 
     public function update($id)
     {
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $errors = [];
 
         $productImg = $_POST["productImg"] ?? null;

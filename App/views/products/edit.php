@@ -2,7 +2,9 @@
 require __DIR__ . '/../components/AdminNavbar.php';
 @require __DIR__ . "/../components/bootstrap.php";
 
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 
 $old = $_SESSION['old'] ?? $product ?? [];
 $errors = $_SESSION['errors'] ?? [];
