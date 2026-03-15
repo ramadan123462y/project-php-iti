@@ -37,7 +37,7 @@ class AuthUserController extends Controller
             ->where('role', $request->role)
             ->first();
 
-        if (!$user || $request->password != $user['password']) {
+        if (!$user || !password_verify($request->password, $user['password'])) {
             pushError('login', 'Invalid credentials');
             redirect("/authuser/index");
         }
