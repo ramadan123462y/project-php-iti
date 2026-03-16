@@ -41,29 +41,20 @@ function active($uri, $paths)
 
             </ul>
 
-            <div class="dropdown">
-                <a class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark"
-                   href="#"
-                   data-bs-toggle="dropdown">
+           <div class="d-flex align-items-center">
 
-                    <img src="<?= url('/assets/images/users/' . (!empty($authUser['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $authUser['image']) ? $authUser['image'] : 'default.jpg')) ?>"
-                         width="35"
-                         height="35"
-                         class="rounded-circle me-2">
+    <img src="<?= url('/assets/images/users/' . (!empty($authUser['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $authUser['image']) ? $authUser['image'] : 'default.jpg')) ?>"
+         width="35"
+         height="35"
+         class="rounded-circle me-2">
 
-                    <strong><?= e($displayName) ?></strong>
-                </a>
+    <strong class="me-3"><?= e($displayName) ?></strong>
 
-                <ul class="dropdown-menu dropdown-menu-end shadow">
+    <a class="btn btn-sm btn-outline-danger" href="<?= url('/AuthUser/logout') ?>">
+        Logout
+    </a>
 
-                    <li>
-                        <a class="dropdown-item text-danger" href="<?= url('/AuthUser/logout') ?>">
-                            Logout
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
+</div>
 
         </div>
     </div>
