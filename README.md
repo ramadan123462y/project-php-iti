@@ -121,7 +121,7 @@ project-php-iti/
 ├── App/
 ├── config/
 ├── public/
-├── schema.sql
+├── schema.jpeg
 ├── seeder.sql
 ├── README.md
 └── ...
@@ -198,8 +198,7 @@ The seeded accounts are ready for testing.
    - `www` for WAMP
    - or the appropriate folder for Laragon
 
-4. Import the database files in this order:
-   - `seeder.sql`
+4. Import the database files : `seeder.sql`
 
 5. Make sure Apache and MySQL are running.
 
@@ -215,8 +214,8 @@ http://localhost/project-php-iti/public/authuser/index
 ## Important Notes
 - The project entry point is inside the **`public/`** folder.
 - Make sure Apache rewrite is working if the project depends on routing rules.
-- Import **`schema.sql` first**, then **`seeder.sql`**.
-- If the database name or credentials are different on your machine, update the configuration file before running the project.
+- Import **`seeder.sql`
+- If the credentials are different on your machine, update the configuration file before running the project.
 
 ---
 
