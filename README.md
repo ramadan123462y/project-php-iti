@@ -199,7 +199,7 @@ The seeded accounts are ready for testing.
 
 Example:
 ```text
-http://localhost/project-php-iti/public/
+http://localhost/project-php-iti/public/authuser/index
 ```
 
 ---
