@@ -32,6 +32,9 @@ class UsersController extends Controller
     private function deleteImage($image)
     {
         if (!$image) return;
+        if ($image === 'default.jpg') {
+        return;
+    }
 
         $path = __DIR__ . '/../../public/assets/images/users/' . $image;
 
