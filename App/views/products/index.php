@@ -8,8 +8,6 @@ require __DIR__ . '/../components/AdminNavbar.php';
   <div class="hstack-wrap mb-4">
     <h1>Products</h1>
     <div class="hstack-wrap gap-2">
-      <a class="btn btn-primary-subtle" href="<?= url('categories') ?>">Categories</a>
-
       <a class="btn btn-primary" href="<?= url('products/create') ?>">Add +</a>
     </div>
   </div>

@@ -11,9 +11,9 @@ class CategoriesController extends Controller
     {
 
         if (!Auth::isAuth('admin')) {
-          
+
             redirect('/home/guest');
-            
+
         }
     }
 
@@ -64,10 +64,30 @@ LIMIT 1"
 
     public function delete($id)
     {
+        $page = $_REQUEST['page'] ?? 1;
+        $name = $_REQUEST['name'] ?? '';
+
+        $product = QueryBuilder::table("products")
+            ->where("category_id", $id)
+            ->first();
+
+        if ($product) {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+            var_dump("AAAA");
+            $errors = [];
+            $errors['category'] = 'Category '. $name .' cannot be deleted because it is used by products';
+            $errors['id'] = $id;
+            $_SESSION['errors'] = $errors;
+            redirect("/categories?page=" . $page);
+            return;
+    }
+
+
         QueryBuilder::table(table: "product_category")
             ->where("id", $id)
             ->delete();
-        $page = $_REQUEST['page'] ?? 1;
         redirect("/categories?page=" . $page);
     }
 

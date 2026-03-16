@@ -42,6 +42,11 @@ function active($uri, $paths)
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link fw-semibold <?= active($currentUri, ['/Categories', '/Categories/index']) ?>"
+                        href="<?= url('/Categories/index') ?>">Categories</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link fw-semibold <?= active($currentUri, ['/Users', '/Users/index']) ?>"
                         href="<?= url('/Users/index') ?>">Users</a>
                 </li>

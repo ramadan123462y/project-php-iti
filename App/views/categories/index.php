@@ -2,6 +2,15 @@
 require __DIR__ . '/../components/AdminNavbar.php';
 @require __DIR__ . "/../components/bootstrap.php";
 
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+$errors = $_SESSION['errors'] ?? [];
+
+unset($_SESSION['errors']);
+
+
 ?>
 
 <div class="pageContainer">
@@ -49,11 +58,14 @@ require __DIR__ . '/../components/AdminNavbar.php';
           Are you sure you want to Delete Category <?= $category['name'] ?>?
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <form action="<?= url("categories/delete/{$category['id']}") ?>" method="POST">
+        <div class="">
+          <form action="<?= url("categories/delete/{$category['id']}") ?>" method="POST" class="hstack gap-2 align-items-center mb-0">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-danger">Delete</button>
             <input type="hidden" name="page" value="<?= $currentPage ?>">
+            <input type="hidden" name="name" value="<?= $category["name"] ?>">
           </form>
+        </div>
       </div>
     </div>
   </div>
@@ -65,6 +77,11 @@ require __DIR__ . '/../components/AdminNavbar.php';
         <?php endforeach; ?>
       </tbody>
     </table>
+
+            <?php if(isset($errors["category"])): ?>
+          <p class="error"><?= $errors["category"] ?></p>
+        <?php endif ?>
+
     </div>
 
 
