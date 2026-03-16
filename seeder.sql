@@ -239,11 +239,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `room_id`, `ext`, `role`, `image`) VALUES
-(1, 'Admin', 'admin@cafeteria.com', '$2y$10$dD2IoDSwbV66Kv5zVt0MtOLRJzI9Blddp.jeEQctZZ2f4OUC0MlRS', 1, '101', 'admin', 'default.jpg'),
-(2, 'Ahmed Mohamed', 'ahmed@cafeteria.com', '$2y$10$dD2IoDSwbV66Kv5zVt0MtOLRJzI9Blddp.jeEQctZZ2f4OUC0MlRS', 2, '102', 'user', 'default.jpg'),
-(3, 'Sara Ali', 'sara@cafeteria.com', '$2y$10$dD2IoDSwbV66Kv5zVt0MtOLRJzI9Blddp.jeEQctZZ2f4OUC0MlRS', 3, '103', 'user', 'default.jpg'),
-(4, 'Omar Khaled', 'omar@cafeteria.com', '$2y$10$dD2IoDSwbV66Kv5zVt0MtOLRJzI9Blddp.jeEQctZZ2f4OUC0MlRS', 4, '104', 'user', 'default.jpg');
-
+(1, 'Admin', 'admin@cafeteria.com', '$2y$10$dD2IoDSwbV66Kv5zVt0MtOLRJzI9Blddp.jeEQctZZ2f4OUC0MlRS', 1, '101', 'admin', 'NULL'),
+(2, 'Ahmed Mohamed', 'ahmed@cafeteria.com', '$2y$10$dD2IoDSwbV66Kv5zVt0MtOLRJzI9Blddp.jeEQctZZ2f4OUC0MlRS', 2, '102', 'user', 'NULL'),
+(3, 'Sara Ali', 'sara@cafeteria.com', '$2y$10$dD2IoDSwbV66Kv5zVt0MtOLRJzI9Blddp.jeEQctZZ2f4OUC0MlRS', 3, '103', 'user', 'NULL'),
+(4, 'Omar Khaled', 'omar@cafeteria.com', '$2y$10$dD2IoDSwbV66Kv5zVt0MtOLRJzI9Blddp.jeEQctZZ2f4OUC0MlRS', 4, '104', 'user', 'NULL');
 
 --
 -- Indexes for dumped tables
