@@ -19,6 +19,11 @@ unset($_SESSION['errors']);
     <a class="btn btn-primary" href="<?= url('categories/create') ?>">Add +</a>
   </div>
 
+              <?php if(isset($errors["category"])): ?>
+          <p class="error"><?= $errors["category"] ?></p>
+        <?php endif ?>
+
+
   <div class="table-responsive">
     <table class="table table-fixed-height">
       <thead class="table-light">
@@ -78,9 +83,6 @@ unset($_SESSION['errors']);
       </tbody>
     </table>
 
-            <?php if(isset($errors["category"])): ?>
-          <p class="error"><?= $errors["category"] ?></p>
-        <?php endif ?>
 
     </div>
 
