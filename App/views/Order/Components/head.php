@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root {
-            --cafe-primary: #1a4d2e;
+            --cafe-primary: #0d6efd;
             --cafe-secondary: #e8dfca;
         }
 
