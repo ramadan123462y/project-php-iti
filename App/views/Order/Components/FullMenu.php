@@ -5,10 +5,11 @@
                 <div class="text-end mb-2">
                     <span class="badge rounded-pill badge-price"><?= e($product['price']) ?></span>
                 </div>
-                <img
-                    src="<?= url('/assets/images/products/' . e($product['image'])) ?>"
-                    class="img-fluid"
-                    alt="<?= e($product['name']) ?>">
+              <img
+    src="<?= url('/assets/images/products/' . e($product['image'])) ?>"
+    class="img-fluid"
+    style="width:100%; height:200px; object-fit:contain;"
+    alt="<?= e($product['name']) ?>">
                 <h6 class="fw-bold"><?= e($product['name']) ?></h6>
 
                 <span class="badge bg-light text-dark mb-2">
