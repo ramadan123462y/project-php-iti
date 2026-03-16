@@ -16,9 +16,6 @@ require __DIR__ . '/../components/' . $navbar;
                         <i class="bi bi-receipt me-2"></i>My Orders
                     </h1>
                     <div>
-                        <a href="<?= url("orders/create") ?>" class="btn btn-success me-2">
-                            <i class="bi bi-plus-circle me-1"></i>New Order
-                        </a>
                         <a href="<?= url("order/index") ?>" class="btn btn-outline-secondary">
                             <i class="bi bi-house me-1"></i>Home
                         </a>
