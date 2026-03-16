@@ -57,7 +57,7 @@ class OrderController extends Controller
 
         $products = $this->getProducts();
         $rooms = $this->getRooms();
-        $latestOrders = $this->getLatestOrders($userId);
+        $latestOrder = $this->getLatestOrder($userId);
 
         $cart = $_SESSION["cart"] ?? [];
 
@@ -65,7 +65,7 @@ class OrderController extends Controller
         $redirectTo = $this->buildRedirectTarget($currentPagePath, $userId);
 
         return [
-            "latestOrders" => $latestOrders,
+            "latestOrder" => $latestOrder,
             "products" => $products,
             "rooms" => $rooms,
             "cart" => $cart,
@@ -92,12 +92,21 @@ class OrderController extends Controller
 
         if ($search) {
             return QueryBuilder::table("products")->raw(
-                "SELECT * FROM products WHERE name LIKE ?",
-                ["%$search%"]
+                "SELECT products.*, product_category.name AS category_name
+             FROM products
+             JOIN product_category ON products.category_id = product_category.id
+             WHERE (products.name LIKE ? OR product_category.name LIKE ?)
+             AND products.is_available = 1",
+                ["%$search%", "%$search%"]
             );
         }
 
-        return QueryBuilder::table("products")->get();
+        return QueryBuilder::table("products")->raw(
+            "SELECT products.*, product_category.name AS category_name
+         FROM products
+         JOIN product_category ON products.category_id = product_category.id
+         WHERE products.is_available = 1"
+        );
     }
 
     private function getRooms()
@@ -105,21 +114,33 @@ class OrderController extends Controller
         return QueryBuilder::table("rooms")->get();
     }
 
-    private function getLatestOrders($userId)
+    private function getLatestOrder($userId)
     {
         if (!$userId) {
             return [];
         }
 
-        return QueryBuilder::table("orders")->raw(
-            "SELECT oi.*, p.name, p.image
-             FROM order_item oi
-             JOIN products p ON p.id = oi.product_id
-             JOIN orders o ON o.id = oi.order_id
-             WHERE o.user_id = ?
-             ORDER BY oi.id DESC
-             LIMIT 2",
+        $latestOrder = QueryBuilder::table("orders")->raw(
+            "SELECT *
+         FROM orders
+         WHERE user_id = ?
+         ORDER BY created_at DESC
+         LIMIT 1",
             [$userId]
+        );
+
+        if (!$latestOrder) {
+            return [];
+        }
+
+        $orderId = $latestOrder[0]["id"];
+        return QueryBuilder::table("order_item")->raw(
+            "SELECT oi.*, p.name, p.image, o.status
+         FROM order_item oi
+         JOIN products p ON p.id = oi.product_id
+         JOIN orders o ON o.id = oi.order_id
+         WHERE oi.order_id = ?",
+            [$orderId]
         );
     }
 
