@@ -26,13 +26,15 @@ Example:
 - Helped with testing and bug fixing.
 
 ### Karim Kadry
-_Write your contribution here._
-
-Example:
-- Responsible for the ______ module.
-- Built the ______ page / feature.
-- Worked on ______.
-- Helped with testing and bug fixing.
+- Developed the Order Request module that allows users to select products and place orders.
+- Implemented cart functionality using PHP sessions to manage selected products and quantities.
+- Built the backend logic for creating orders and storing order items in the database.
+- Added product search and availability filtering.
+- Implemented role-based ordering, allowing admins to create orders for different users.
+- Handled order validation and error handling before submitting orders.
+- Built the main navigation bar (Navbar) for the application.
+- Worked on OrderController and order-related views.
+- Assisted with testing the ordering workflow and fixing issues.
 
 ### Ahmed Ibrahim Elemam — User Module
 I was responsible for the **User Management** part of the project.
@@ -130,7 +132,7 @@ Before running the project, make sure you have:
 
 ## Database Setup
 ### Step 1: Create / Import the database schema
-Import **`schema.sql`** first.
+Import **`seeder.sql`** first.
 
 This file creates:
 - database structure
@@ -139,17 +141,9 @@ This file creates:
 - indexes
 - auto increment values
 - foreign key constraints
+- Seeds data to database
 
-### Step 2: Seed sample data
-After importing `schema.sql`, import **`seeder.sql`**.
 
-This file inserts sample data for:
-- rooms
-- product categories
-- products
-- users
-- orders
-- order items
 
 ### Database Configuration
 The database configuration used in the project is:
@@ -168,26 +162,20 @@ The seeded accounts are ready for testing.
 
 ### Admin Account
 - **Email:** `admin@cafeteria.com`
-- **Password:** `password`
+- **Password:** `123456`
+- **Role:** `admin`
 
 ### User Accounts
 - **Email:** `ahmed@cafeteria.com`
-- **Password:** `password`
+- **Password:** `123456`
+- **Role** `user`
 
 - **Email:** `sara@cafeteria.com`
-- **Password:** `password`
+- **Password:** `123456`
+- **Role** `user`
 
-- **Email:** `omar@cafeteria.com`
-- **Password:** `password`
 
-- **Email:** `mona@cafeteria.com`
-- **Password:** `password`
 
-> **Note:** All seeded accounts use the same password: `password`
-
-This makes it easier for the TA / instructor to test the project using more than one account.
-
----
 
 ## How to Run the Project
 1. Clone the repository:
@@ -203,7 +191,6 @@ This makes it easier for the TA / instructor to test the project using more than
    - or the appropriate folder for Laragon
 
 4. Import the database files in this order:
-   - `schema.sql`
    - `seeder.sql`
 
 5. Make sure Apache and MySQL are running.
@@ -227,11 +214,10 @@ http://localhost/project-php-iti/public/
 
 ## For the TA / Instructor
 To run the project successfully:
-1. Import `schema.sql`
-2. Import `seeder.sql`
-3. Start Apache and MySQL
-4. Open the project from `/public`
-5. Test using any of the provided accounts
+1. Import `seeder.sql`
+2. Start Apache and MySQL
+3. Open the project from `/public`
+4 . Test using any of the provided accounts
 
 ---
 
