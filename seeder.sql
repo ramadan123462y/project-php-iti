@@ -40,11 +40,11 @@ INSERT INTO products (name, price, image, category_id, is_available) VALUES
 
 -- USERS (password plain text, image fixed = default.jpg)
 INSERT INTO users (name,email,password,room_id,ext,role,image) VALUES
-('Admin','admin@cafeteria.com','123456',1,'101','admin','default.jpg'),
-('Ahmed Mohamed','ahmed@cafeteria.com','123456',2,'102','user','default.jpg'),
-('Sara Ali','sara@cafeteria.com','123456',3,'103','user','default.jpg'),
-('Omar Khaled','omar@cafeteria.com','123456',4,'104','user','default.jpg'),
-('Mona Hassan','mona@cafeteria.com','123456',5,'105','user','default.jpg');
+('Admin','admin@cafeteria.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',1,'101','admin','default.jpg'),
+('Ahmed Mohamed','ahmed@cafeteria.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',2,'102','user','default.jpg'),
+('Sara Ali','sara@cafeteria.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',3,'103','user','default.jpg'),
+('Omar Khaled','omar@cafeteria.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',4,'104','user','default.jpg'),
+('Mona Hassan','mona@cafeteria.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',5,'105','user','default.jpg');
 
 
 
