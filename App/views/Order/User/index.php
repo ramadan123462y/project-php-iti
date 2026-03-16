@@ -2,7 +2,9 @@
 
 <body>
 
-    <?php require __DIR__ . '/../../components/UserNavbar.php'; ?>
+    <?php require __DIR__ . '/../../components/UserNavbar.php';
+
+?>
 
     <div class="d-flex align-items-center gap-3 ms-auto">
         <?php require __DIR__ . '/../Components/search_bar.php'; ?>

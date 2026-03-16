@@ -19,13 +19,6 @@ unset($_SESSION['old'], $_SESSION['errors']);
     <div>
 
       <h1>Edit Category <?= $category['name'] ?></h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="<?= url("categories") ?>">categories</a></li>
-          <li class="breadcrumb-item"><a href="<?= url("categories/show/".$category['id']) ?>"><?= $category['name'] ?></a></li>
-          <li class="breadcrumb-item">Edit</li>
-        </ol>
-      </nav>
     </div>
 
   </div>

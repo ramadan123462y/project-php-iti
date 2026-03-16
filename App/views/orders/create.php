@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/../Order/Components/head.php'; ?>
-<body class="bg-light">
-<?php 
+<body>
+<?php
 use App\Core\Auth;
 $navbar = Auth::isAuth('admin') ? 'AdminNavbar.php' : 'UserNavbar.php';
 require __DIR__ . '/../components/' . $navbar;

@@ -2,7 +2,9 @@
 
 <body>
 
-<?php require __DIR__ . '../../../components/AdminNavbar.php'; ?>
+<?php require __DIR__ . '../../../components/AdminNavbar.php';
+
+?>
 
 <?php require __DIR__ . '/../Components/search_bar.php'; ?>
 

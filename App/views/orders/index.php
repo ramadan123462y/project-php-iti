@@ -2,10 +2,11 @@
 
 <body>
 
-<?php 
+<?php
 use App\Core\Auth;
 $navbar = Auth::isAuth('admin') ? 'AdminNavbar.php' : 'UserNavbar.php';
 require __DIR__ . '/../components/' . $navbar;
+@require __DIR__ . "/../components/bootstrap.php";
 ?>
 
     <div class="container-fluid py-4">

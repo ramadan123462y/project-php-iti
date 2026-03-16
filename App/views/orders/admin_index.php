@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +9,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-    <?php require __DIR__ . '/../components/AdminNavbar.php';?>
+
+<body class="">
+    <?php
+
+    require __DIR__ . '/../components/AdminNavbar.php';
+    @require __DIR__ . "/../components/bootstrap.php";
+
+    ?>
     <div class="container py-4">
 
         <div class="d-flex justify-content-between align-items-center mb-4">

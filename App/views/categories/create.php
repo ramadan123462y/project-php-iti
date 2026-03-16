@@ -19,12 +19,6 @@ unset($_SESSION['old'], $_SESSION['errors']);
     <div>
 
       <h1>New Category</h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="<?= url("categories") ?>">Categories</a></li>
-          <li class="breadcrumb-item active" aria-current="page">New</li>
-        </ol>
-      </nav>
     </div>
 
   </div>

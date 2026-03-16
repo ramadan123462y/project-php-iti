@@ -8,12 +8,6 @@ require __DIR__ . '/../components/AdminNavbar.php';
   <div class="hstack-wrap mb-4">
     <div>
       <h1><?= $category["name"] ?></h1>
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="<?= url("categories") ?>">categories</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><?= $category["name"] ?></li>
-  </ol>
-</nav>
 
 
     </div>

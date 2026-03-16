@@ -19,13 +19,6 @@ unset($_SESSION['old'], $_SESSION['errors']);
     <div>
 
       <h1>Edit Product <?= $product['name'] ?></h1>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="<?= url("products") ?>">products</a></li>
-          <li class="breadcrumb-item"><a href="<?= url("products/show/".$product['id']) ?>"><?= $product['name'] ?></a></li>
-          <li class="breadcrumb-item">Edit</li>
-        </ol>
-      </nav>
     </div>
 
   </div>

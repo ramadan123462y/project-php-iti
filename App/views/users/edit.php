@@ -8,8 +8,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-light">
-    <?php require __DIR__ . '/../components/AdminNavbar.php';?>
+<body>
+    <?php require __DIR__ . '/../components/AdminNavbar.php'; @require __DIR__ . "/../components/bootstrap.php";
+?>
 
     <div class="container">
         <div class="page-box bg-white rounded p-4 mt-4 shadow-sm">

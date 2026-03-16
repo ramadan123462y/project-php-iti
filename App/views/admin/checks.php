@@ -308,7 +308,9 @@
 
 <body>
 
-    <?php require __DIR__ . '../../components/AdminNavbar.php'; ?>
+    <?php require __DIR__ . '../../components/AdminNavbar.php';
+    @require __DIR__ . "/../components/bootstrap.php";
+ ?>
 
     <div class="container border p-4 mt-5 pt-4">
 

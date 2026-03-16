@@ -14,19 +14,20 @@
             border-radius: 8px;
         }
         .pagination .page-item.active .page-link {
-            background-color:black;
-            border-color: #ffc10700;
-            color: white;
+            /* background-color:black; */
+            /* border-color: #ffc10700; */
+            /* color: white; */
         }
 
         .pagination .page-link {
-            color: #000;
+            /* color: #000; */
         }
 </style>
     </style>
 </head>
-<body class="bg-light">
-    <?php require __DIR__ . '/../components/AdminNavbar.php';?>
+<body>
+    <?php require __DIR__ . '/../components/AdminNavbar.php'; @require __DIR__ . "/../components/bootstrap.php";
+?>
     <div class="container">
         <div class="page-box bg-white rounded p-4 mt-4 shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -35,8 +36,8 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle text-center">
-                    <thead class="table-dark">
+                <table class="table align-middle ">
+                    <thead class="table-light">
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
@@ -61,11 +62,11 @@
                                 </td>
                                 <td><?= $user["ext"] ?></td>
                                 <td>
-                                    <a href="<?= url("users/show/{$user['id']}") ?>" class="btn btn-info btn-sm">View</a>
-                                    <a href="<?= url("users/edit/{$user['id']}") ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="<?= url("users/show/{$user['id']}") ?>" class="btn btn-primary-subtle btn-sm">View</a>
+                                    <a href="<?= url("users/edit/{$user['id']}") ?>" class="btn btn-dark-subtle btn-sm">Edit</a>
                                     <button
                                         type="button"
-                                        class="btn btn-danger btn-sm"
+                                        class="btn btn-danger-subtle btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal<?= $user['id'] ?>">
                                         Delete
@@ -99,29 +100,38 @@
                     </tbody>
                 </table>
                 <?php if (($totalPages ?? 1) > 1): ?>
-                <nav class="mt-4">
-                        <ul class="pagination justify-content-center">
 
-                            <?php if ($page > 1): ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="<?= url('users') . '?page=' . ($page - 1) ?>">Previous</a>
-                                </li>
-                            <?php endif; ?>
+                        <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>"><a class="page-link" href="<?= url('users?page=1') ?>"><i class="fa-solid fa-angles-left"></i>
+</a></li>
+    <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>"><a class="page-link" href="<?= url('users?page='.$page - 1) ?>"><i class="fa-solid fa-angle-left"></i></a></li>
 
-                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                                <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                                    <a class="page-link" href="<?= url('users') . '?page=' . $i ?>"><?= $i ?></a>
-                                </li>
-                            <?php endfor; ?>
+    <?php if($page > 2): ?>
+    <li class="page-item"><a class="page-link" href="<?= url('users?page='.$page - 2) ?>"><?= $page - 2 ?></a></li>
+    <?php endif; ?>
 
-                            <?php if ($page < $totalPages): ?>
-                                <li class="page-item ">
-                                    <a class="page-link" href="<?= url('users') . '?page=' . ($page + 1) ?>">Next</a>
-                                </li>
-                            <?php endif; ?>
+    <?php if($page > 1): ?>
+    <li class="page-item"><a class="page-link" href="<?= url('users?page='.$page - 1) ?>"><?= $page - 1 ?></a></li>
+    <?php endif; ?>
 
-                        </ul>
-                </nav>
+    <li class="page-item active"><a class="page-link" href="<?= url('users?page='.$page) ?>"><?= $page ?></a></li>
+
+    <?php if($page < $totalPages): ?>
+    <li class="page-item"><a class="page-link" href="<?= url('users?page='.$page + 1) ?>"><?= $page + 1 ?></a></li>
+    <?php endif; ?>
+
+    <?php if($page + 1 < $totalPages): ?>
+    <li class="page-item"><a class="page-link" href="<?= url('users?page='.$page + 2) ?>"><?= $page + 2 ?></a></li>
+    <?php endif; ?>
+
+
+    <li class="page-item <?= ($page == $totalPages) ? 'disabled' : '' ?>"><a class="page-link" href="<?= url('users?page='.$page + 1) ?>"><i class="fa-solid fa-angle-right"></i></a></li>
+    <li class="page-item <?= ($page == $totalPages) ? 'disabled' : '' ?>"><a class="page-link" href="<?= url('users?page='.$totalPages) ?>"><i class="fa-solid fa-angles-right"></i></a></li>
+
+  </ul>
+</nav>
+
                 <?php endif; ?>
             </div>
         </div>
