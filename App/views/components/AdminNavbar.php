@@ -63,41 +63,31 @@ function active($uri, $paths)
 
             </ul>
 
-            <div class="dropdown">
-                <a class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark"
-                    href="#"
-                    data-bs-toggle="dropdown">
+           <div class="d-flex align-items-center">
 
-                    <img src="<?= url('/assets/images/users/' . (!empty($authUser['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $authUser['image']) ? $authUser['image'] : 'default.jpg')) ?>"
-                        width="35"
-                        height="35"
-                        class="rounded-circle me-2">
 
-                    <strong><?= e($displayName) ?></strong>
-                </a>
+<img src="<?= url('/assets/images/users/' . (!empty($authUser['image']) && file_exists(__DIR__ . '/../../../public/assets/images/users/' . $authUser['image']) ? $authUser['image'] : 'default.jpg')) ?>"
+    width="35"
+    height="35"
+    class="rounded-circle me-2">
 
-                <ul class="dropdown-menu dropdown-menu-end shadow">
+<strong class="me-3"><?= e($displayName) ?></strong>
 
-                    <?php if (!empty($authUser['id'])): ?>
-                        <li>
-                            <a class="dropdown-item"
-                                href="<?= url('/Users/edit/' . $authUser['id']) ?>">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                    <?php endif; ?>
+<?php if (!empty($authUser['id'])): ?>
+    <a class="btn btn-sm btn-outline-primary me-2"
+       href="<?= url('/Users/edit/' . $authUser['id']) ?>">
+       Profile
+    </a>
+<?php endif; ?>
 
-                    <li>
-                        <a class="dropdown-item text-danger" href="<?= url('/AuthUser/logout') ?>">
-                            Logout
-                        </a>
-                    </li>
+<a class="btn btn-sm btn-outline-danger"
+   href="<?= url('/AuthUser/logout') ?>">
+   Logout
+</a>
 
-                </ul>
-            </div>
+
+</div>
+
 
         </div>
     </div>
