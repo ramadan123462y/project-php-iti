@@ -88,7 +88,7 @@ require __DIR__ . '/../components/' . $navbar;
                                 <tr>
                                     <td class="d-flex align-items-center gap-2">
                                         <?php if (!empty($item['product_image'])): ?>
-                                            <img src="<?= url("images/products/" . $item['product_image']) ?>"
+                                            <img src="<?= url("/assets/images/products/" . $item['product_image']) ?>"
                                                  alt="<?php echo htmlspecialchars($item['product_name'] ?? 'Unknown'); ?>"
                                                  class="rounded"
                                                  style="width: 40px; height: 40px; object-fit: cover;">
