@@ -16,14 +16,22 @@ The project is structured as a core PHP web application and uses MySQL as the da
 
 ## Team Contributions
 
-### Ramadan Mohamed
-_Write your contribution here._
 
-Example:
-- Responsible for the ______ module.
-- Built the ______ page / feature.
-- Worked on ______.
-- Helped with testing and bug fixing.
+### Ramadan Mohamed — Authentication & Checks System
+
+I was responsible for implementing the authentication system and the checks module in the project.
+
+- Designed and implemented the **authentication system** supporting both **admin and user roles**.
+- Developed **login and logout functionality** using PHP sessions and password verification.
+- Implemented **role-based access control** to protect admin-only routes.
+- Built the **Admin Checks page** to display users' orders and financial summaries.
+- Implemented **filtering functionality** including:
+  - Filtering checks by **date range**
+  - Filtering checks by **specific user**
+- Implemented logic to **group orders by users**, and display products under each order for better data visualization.
+- Added **pagination** to efficiently handle large datasets of users and orders.
+- Contributed to improving the **overall project structure and architecture**.
+- Assisted with **testing, debugging, and fixing issues** across different modules.
 
 ### Karim Kadry
 - Developed the Order Request module that allows users to select products and place orders.
